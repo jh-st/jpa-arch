@@ -45,7 +45,7 @@ public class UserController {
         return responseService.getResult(userService.findUsers());
     }
 
-    @GetMapping(value = "/api/v2/users", name = "유저 다건 조회 V3")
+    @GetMapping(value = "/api/v3/users", name = "유저 다건 조회 V3")
     public SingleResult<Page<UserDto>> getUsersV3(final UserConditionDto conditionDto) {
         return responseService.getResult(userService.findPages(conditionDto));
     }
