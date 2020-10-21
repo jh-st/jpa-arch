@@ -8,20 +8,31 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import javax.persistence.EntityManager;
 
+import static com.jh.version2.util.ApiDocumentUtils.getDocumentRequest;
+import static com.jh.version2.util.ApiDocumentUtils.getDocumentResponse;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(UserController.class)
+@AutoConfigureRestDocs
 class UserControllerTest {
 
     @Autowired
@@ -53,12 +64,26 @@ class UserControllerTest {
         given(userService.findById(1L)).willReturn(user);
 
         // when
-        final ResultActions action = this.mockMvc.perform(
-                get("/api/v1/user/{id}", 1L)
+        final ResultActions result = this.mockMvc.perform(
+                RestDocumentationRequestBuilders.get("/api/v1/user/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
         );
 
+        result.andExpect(status().isOk())
+                .andDo(document("user/get-user",
+                        getDocumentRequest(),
+                        getDocumentResponse(),
+                        pathParameters(
+                                parameterWithName("id").description("아이디")
+                        ),
+                        /*requestFields(
+                        ),*/
+                        responseFields(
+                                fieldWithPath("userId").type(JsonFieldType.STRING).description("ID"),
+                                fieldWithPath("userName").type(JsonFieldType.STRING).description("이름")
+                        )
+                ));
     }
 
 }
