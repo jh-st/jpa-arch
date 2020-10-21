@@ -23,11 +23,11 @@ public class Version2Runner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        final TeamDto teamA = teamService.save(new TeamSaveDto("A팀", 1500));
-        final TeamDto teamB = teamService.save(new TeamSaveDto("B팀", 200));
-        final TeamDto teamC = teamService.save(new TeamSaveDto("C팀", 500));
-        final TeamDto teamD = teamService.save(new TeamSaveDto("D팀", 100));
-        final TeamDto teamE = teamService.save(new TeamSaveDto("E팀", 2000));
+        final TeamDto teamA = teamService.save(new TeamSaveDto("A-TEAM", 1500));
+        final TeamDto teamB = teamService.save(new TeamSaveDto("B-TEAM", 200));
+        final TeamDto teamC = teamService.save(new TeamSaveDto("C-TEAM", 500));
+        final TeamDto teamD = teamService.save(new TeamSaveDto("D-TEAM", 100));
+        final TeamDto teamE = teamService.save(new TeamSaveDto("E-TEAM", 2000));
 
         for (int i=0; i<1000; i++) {
             if (i >= 800)

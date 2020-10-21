@@ -1,9 +1,11 @@
 package com.jh.version2.controller;
 
+import com.jh.version2.entity.Team;
 import com.jh.version2.entity.User;
 import com.jh.version2.service.ResponseService;
 import com.jh.version2.service.team.TeamService;
 import com.jh.version2.service.user.UserService;
+import com.jh.version2.service.user.dto.UserDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -51,17 +53,24 @@ class UserControllerTest {
     private TeamService teamService;
 
     @Test
-    @DisplayName("단건 유저 조회")
-    public void getUser() throws Exception {
+    @DisplayName("단건 유저 조회 V1")
+    public void getUserV1() throws Exception {
 
         // given
+        final Team team = Team.builder()
+                .name("A-TEAM")
+                .score(1500)
+                .build();
+
         final User user = User.builder()
                 .name("test1")
                 .age(0)
-                .team(teamService.findById(1L))
+                .team(team)
                 .build();
 
-        given(userService.findById(1L)).willReturn(user);
+        final UserDto userDto = UserDto.of(user);
+
+        given(userService.findByUserId(1L)).willReturn(userDto);
 
         // when
         final ResultActions result = this.mockMvc.perform(
@@ -75,13 +84,17 @@ class UserControllerTest {
                         getDocumentRequest(),
                         getDocumentResponse(),
                         pathParameters(
-                                parameterWithName("id").description("아이디")
+                                parameterWithName("id").description("ID")
                         ),
                         /*requestFields(
                         ),*/
                         responseFields(
-                                fieldWithPath("userId").type(JsonFieldType.STRING).description("ID"),
-                                fieldWithPath("userName").type(JsonFieldType.STRING).description("이름")
+                                fieldWithPath("userId").type(JsonFieldType.NUMBER).description("유저 아이디")
+                                , fieldWithPath("userName").type(JsonFieldType.STRING).description("유저 이름")
+                                , fieldWithPath("userAge").type(JsonFieldType.NUMBER).description("유저 나이")
+                                , fieldWithPath("team.teamId").type(JsonFieldType.NUMBER).description("팀 아이디")
+                                , fieldWithPath("team.teamName").type(JsonFieldType.STRING).description("팀 이름")
+                                , fieldWithPath("team.teamScore").type(JsonFieldType.STRING).description("팀 점수")
                         )
                 ));
     }
