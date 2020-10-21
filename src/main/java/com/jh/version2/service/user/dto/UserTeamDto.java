@@ -9,24 +9,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserTeamDto {
 
+    private Long teamId;
     private String teamName;
     private Integer teamScore;
 
     @Builder
-    public UserTeamDto(String teamName, Integer teamScore) {
-        this.teamName = teamName;
-        this.teamScore = teamScore;
+    public UserTeamDto(final Team team) {
+        this.teamId = team.getId();
+        this.teamName = team.getName();
+        this.teamScore = team.getScore();
     }
 
     public static UserTeamDto of (Team team) {
         return UserTeamDto.builder()
-                .teamName(team.getName())
-                .teamScore(team.getScore())
+                .team(team)
                 .build();
     }
 
-    public UserTeamDto (Team team) {
-        of(team);
-    }
 
 }

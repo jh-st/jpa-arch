@@ -1,5 +1,6 @@
 package com.jh.version2.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class User {
 
     private Integer age;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Team team;
 

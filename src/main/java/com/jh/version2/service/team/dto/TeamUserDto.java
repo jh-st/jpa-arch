@@ -1,7 +1,6 @@
 package com.jh.version2.service.team.dto;
 
 import com.jh.version2.entity.User;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,20 +13,15 @@ public class TeamUserDto {
     private Integer userAge;
 
     @Builder
-    public TeamUserDto(String userName, Integer userAge) {
-        this.userName = userName;
-        this.userAge = userAge;
+    public TeamUserDto(final User user) {
+        this.userName = user.getName();
+        this.userAge = user.getAge();
     }
 
-    public static TeamUserDto of (User user) {
+    public static TeamUserDto of (final User user) {
         return TeamUserDto.builder()
-                .userName(user.getName())
-                .userAge(user.getAge())
+                .user(user)
                 .build();
-    }
-
-    public TeamUserDto(User user) {
-        of(user);
     }
 
 }

@@ -1,6 +1,5 @@
 package com.jh.version2.service.user.dto;
 
-import com.jh.version2.entity.Team;
 import com.jh.version2.entity.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,27 +9,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDto {
 
+    private Long userId;
     private String userName;
     private Integer userAge;
     private UserTeamDto team;
 
     @Builder
-    public UserDto (String userName, Integer userAge, Team team) {
-        this.userName = userName;
-        this.userAge = userAge;
-        this.team = new UserTeamDto(team);
+    public UserDto (final User user) {
+        this.userId = user.getId();
+        this.userName = user.getName();
+        this.userAge = user.getAge();
+        this.team = new UserTeamDto(user.getTeam());
     }
 
-    public static UserDto of (User user) {
+    public static UserDto of (final User user) {
         return UserDto.builder()
-                .userName(user.getName())
-                .userAge(user.getAge())
-                .team(user.getTeam())
+                .user(user)
                 .build();
-    }
-
-    public UserDto (User user) {
-        of(user);
     }
 
 }
