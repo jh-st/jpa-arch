@@ -8,6 +8,7 @@ import com.jh.version2.service.user.UserService;
 import com.jh.version2.service.user.dto.UserConditionDto;
 import com.jh.version2.service.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -32,6 +34,7 @@ public class UserController {
 
     @GetMapping(value = "/api/v2/user/{id}", name = "유저 단건 조회 V2")
     public SingleResult<UserDto> getUserV2(@PathVariable Long id) {
+        log.info("UserController.getUserV2");
         return responseService.getResult(userService.findByUserId(id));
     }
 

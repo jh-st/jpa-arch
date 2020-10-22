@@ -4,8 +4,9 @@ import com.jh.version2.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Getter
+@Getter @Setter
 @NoArgsConstructor
 public class UserDto {
 
