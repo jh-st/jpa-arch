@@ -1,10 +1,10 @@
 package com.jh.version2;
 
-import com.jh.version2.service.team.TeamService;
-import com.jh.version2.service.team.dto.TeamDto;
-import com.jh.version2.service.team.dto.TeamSaveDto;
-import com.jh.version2.service.user.UserService;
-import com.jh.version2.service.user.dto.UserSaveDto;
+import com.jh.version2.domain.team.dto.TeamDto;
+import com.jh.version2.domain.team.dto.TeamSaveDto;
+import com.jh.version2.domain.team.service.TeamService;
+import com.jh.version2.domain.user.dto.UserSaveDto;
+import com.jh.version2.domain.user.service.UserService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
