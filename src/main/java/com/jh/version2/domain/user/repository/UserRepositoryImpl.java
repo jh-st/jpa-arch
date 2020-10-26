@@ -30,9 +30,8 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
     public Page<UserDto> findPages(final UserConditionDto conditionDto) {
         final QUser qUser = QUser.user;
         final QTeam qTeam = QTeam.team;
-
         final JPAQuery<UserDto> query = jpaQueryFactory
-                .select(Projections.constructor(
+                .select(Projections.bean(
                         UserDto.class
                         , qUser.id.as("userId")
                         , qUser.name.as("userName")
@@ -44,12 +43,12 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
                 .from(qUser)
                 .innerJoin(qUser.team, qTeam)
                 .where(
-                        //UserPredicateHelper.compareKeyword(conditionDto)
-                        qUser.name.contains(conditionDto.getKeyword())
-                        , qUser.id.gt(0)
+                        UserPredicateHelper.compareKeyword(conditionDto)
                 );
 
-        final List<UserDto> users = Objects.requireNonNull(getQuerydsl()).applyPagination(conditionDto.getPageRequest(), query).fetch();
+        final List<UserDto> users = Objects.requireNonNull(getQuerydsl())
+                .applyPagination(conditionDto.getPageRequest(), query)
+                .fetch();
         return new PageImpl<>(users, conditionDto.getPageRequest(), query.fetchCount());
     }
 }

@@ -1,11 +1,14 @@
 package com.jh.version2.domain.user.dto;
 
 import com.jh.version2.common.dto.ConditionDto;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
-@ToString
+//@ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class UserConditionDto extends ConditionDto {
 
