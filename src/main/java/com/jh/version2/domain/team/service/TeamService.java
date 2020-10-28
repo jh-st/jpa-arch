@@ -5,6 +5,7 @@ import com.jh.version2.domain.team.dto.TeamConditionDto;
 import com.jh.version2.domain.team.dto.TeamDto;
 import com.jh.version2.domain.team.entity.Team;
 import com.jh.version2.domain.team.repository.TeamRepository;
+import com.jh.version2.domain.team.util.TeamDtoUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -63,18 +64,18 @@ public class TeamService {
     public TeamDto save(final Team team) {
         log.info("TeamService.save");
         teamRepository.save(team);
-        return TeamDto.of(team);
+        return TeamDtoUtil.of(team);
     }
 
     @Transactional
     public TeamDto apply(final Team team, final TeamApplyDto applyDto) {
         log.info("TeamService.apply");
-        return TeamDto.of(team.update(applyDto));
+        return TeamDtoUtil.of(team.update(applyDto));
     }
 
     @Transactional
     public TeamDto delete(final Team team) {
         log.info("TeamService.delete");
-        return TeamDto.of((Team) team.delete());
+        return TeamDtoUtil.of((Team) team.delete());
     }
 }

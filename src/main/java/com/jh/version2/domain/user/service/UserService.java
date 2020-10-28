@@ -6,6 +6,7 @@ import com.jh.version2.domain.user.dto.UserConditionDto;
 import com.jh.version2.domain.user.dto.UserDto;
 import com.jh.version2.domain.user.entity.User;
 import com.jh.version2.domain.user.repository.UserRepository;
+import com.jh.version2.domain.user.util.UserDtoUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -63,19 +64,19 @@ public class UserService {
     public UserDto save(final User user) {
         log.info("UserService.save");
         userRepository.save(user);
-        return UserDto.of(user);
+        return UserDtoUtil.of(user);
     }
 
     @Transactional
     public UserDto apply(final User user, final UserApplyDto applyDto, final Team team) {
         log.info("UserService.apply");
-        return UserDto.of(user.update(applyDto, team));
+        return UserDtoUtil.of(user.update(applyDto, team));
     }
 
     @Transactional
     public UserDto delete(final User user) {
         log.info("UserService.delete");
-        return UserDto.of((User) user.delete());
+        return UserDtoUtil.of((User) user.delete());
     }
 
 }

@@ -5,6 +5,7 @@ import com.jh.version2.domain.team.entity.QTeam;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import lombok.experimental.UtilityClass;
+import org.springframework.util.ObjectUtils;
 
 import static com.jh.version2.common.dto.variable.YesOrNo.N;
 import static com.jh.version2.common.dto.variable.YesOrNo.Y;
@@ -23,8 +24,11 @@ public class TeamPredicateHelper {
 
     public Predicate compareKeyword(TeamConditionDto conditionDto) {
         final BooleanBuilder builder = new BooleanBuilder();
+        final String keyword = conditionDto.getKeyword();
 
-        builder.or(QTeam.team.name.contains(conditionDto.getKeyword()));
+        if (!ObjectUtils.isEmpty(keyword)) {
+            builder.or(QTeam.team.name.contains(conditionDto.getKeyword()));
+        }
 
         return builder;
     }

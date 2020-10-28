@@ -21,10 +21,4 @@ public class UserTeamDto {
         this.teamScore = team.getScore();
     }
 
-    public static UserTeamDto of (Team team) {
-        return UserTeamDto.builder()
-                .team(team)
-                .build();
-    }
-
 }

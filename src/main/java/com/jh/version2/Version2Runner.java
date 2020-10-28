@@ -31,6 +31,8 @@ public class Version2Runner implements ApplicationRunner {
         final TeamDto teamE = teamService.postTeam(new TeamSaveDto("E-TEAM", 2000));
         final TeamDto teamF = teamService.postTeam(new TeamSaveDto("F-TEAM", 12000));
         final TeamDto teamG = teamService.postTeam(new TeamSaveDto("G-TEAM", 9999));
+        final TeamDto teamH = teamService.postTeam(new TeamSaveDto("H-TEAM", 19999, teamG.getTeamId()));
+        final TeamDto teamI = teamService.postTeam(new TeamSaveDto("I-TEAM", 29999, teamG.getTeamId()));
 
         for (int i=0; i<1000; i++) {
             if (i >= 800)

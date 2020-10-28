@@ -7,6 +7,7 @@ import com.jh.version2.domain.team.service.TeamService;
 import com.jh.version2.domain.user.dto.UserDto;
 import com.jh.version2.domain.user.entity.User;
 import com.jh.version2.domain.user.service.UserService;
+import com.jh.version2.domain.user.util.UserDtoUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -74,7 +75,7 @@ class UserControllerTest {
                 .team(team)
                 .build();
 
-        final UserDto userDto = UserDto.of(user);
+        final UserDto userDto = UserDtoUtil.of(user);
         //userDto.setUserId(1L);
         //userDto.getTeam().setTeamId(1L);
 

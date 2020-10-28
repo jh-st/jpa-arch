@@ -6,6 +6,7 @@ import com.jh.version2.domain.team.dto.TeamDto;
 import com.jh.version2.domain.team.dto.TeamSaveDto;
 import com.jh.version2.domain.team.entity.Team;
 import com.jh.version2.domain.team.service.TeamService;
+import com.jh.version2.domain.team.util.TeamDtoUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -31,7 +32,8 @@ public class ApiTeamService {
             final TeamConditionDto conditionDto, final List<String> args
     ) {
         log.info("ApiTeamService.getPagesByConfigure");
-        return teamService.findPages(conditionDto).map(o -> TeamDto.target(o, args));
+        return teamService.findPages(conditionDto)
+                .map(o -> TeamDtoUtil.target(o, args));
     }
 
     public List<TeamDto> getTeams() {
@@ -41,7 +43,10 @@ public class ApiTeamService {
 
     public List<TeamDto> getTeamsByConfigure(final List<String> args) {
         log.info("ApiTeamService.getTeamsByConfigure");
-        return teamService.findTeams().stream().map(o -> TeamDto.target(o, args)).collect(Collectors.toList());
+        return teamService.findTeams()
+                .stream()
+                .map(o -> TeamDtoUtil.target(o, args))
+                .collect(Collectors.toList());
     }
 
     public TeamDto getTeam(final Long id) {
@@ -62,16 +67,26 @@ public class ApiTeamService {
     public TeamDto deleteTeam(final Long id) {
         log.info("ApiTeamService.deleteUser");
         final Team team = teamService.findById(id);
+
+        if (!team.getTeams().isEmpty()) {
+            throw new RuntimeException();
+        }
+
         if (!team.getUsers().isEmpty()) {
             throw new RuntimeException();
         }
 
-        return TeamDto.target(teamService.delete(team), Arrays.asList("teamId", "teamName"));
+        return TeamDtoUtil.target(
+                teamService.delete(team)
+                , Arrays.asList("teamId", "teamName"));
     }
 
     public List<TeamDto> deleteTeams(List<Long> ids) {
         log.info("ApiTeamService.deleteUsers");
-        return ids.stream().map(this::deleteTeam).collect(Collectors.toList());
+        return ids
+                .stream()
+                .map(this::deleteTeam)
+                .collect(Collectors.toList());
     }
 
 }

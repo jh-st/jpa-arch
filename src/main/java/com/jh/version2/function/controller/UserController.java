@@ -71,6 +71,15 @@ public class UserController {
         return ResponseUtil.getResult(userService.getUser(id));
     }
 
+    @ApiOperation(value = "유저 단건 조회 v1.0 - single")
+    @GetMapping(value = "/single/{id}", name = "유저 단건 조회 v1.0 - single"
+            , produces = {MediaType.APPLICATION_JSON_VALUE})
+    public SingleResult<UserDto> getUserSingle(
+            @ApiParam(value = "유저 ID", required = true) @PathVariable final Long id) {
+        log.info("UserController.getUserSingle");
+        return ResponseUtil.getResult(userService.getUserSingle(id));
+    }
+
     @ApiOperation(value = "유저 단건 등록 v1.0")
     @PostMapping(name = "유저 단건 등록 v1.0"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}

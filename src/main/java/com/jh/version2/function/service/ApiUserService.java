@@ -8,6 +8,7 @@ import com.jh.version2.domain.user.dto.UserDto;
 import com.jh.version2.domain.user.dto.UserSaveDto;
 import com.jh.version2.domain.user.entity.User;
 import com.jh.version2.domain.user.service.UserService;
+import com.jh.version2.domain.user.util.UserDtoUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -35,7 +36,7 @@ public class ApiUserService {
     ) {
         log.info("ApiUserService.getPagesByConfigure");
         return userService.findPages(conditionDto)
-                .map(o -> UserDto.target(o, args));
+                .map(o -> UserDtoUtil.target(o, args));
     }
 
     public List<UserDto> getUsers() {
@@ -47,13 +48,18 @@ public class ApiUserService {
         log.info("ApiUserService.getUsersByConfigure");
         return userService.findUsers()
                 .stream()
-                .map(o -> UserDto.target(o, args))
+                .map(o -> UserDtoUtil.target(o, args))
                 .collect(Collectors.toList());
     }
 
     public UserDto getUser(final Long id) {
         log.info("ApiUserService.getUser");
         return userService.findByUserId(id);
+    }
+
+    public UserDto getUserSingle(Long id) {
+        log.info("ApiUserService.getUserSingle");
+        return UserDtoUtil.withoutTeam(this.getUser(id));
     }
 
     public UserDto postUser(final UserSaveDto saveDto) {
@@ -73,7 +79,7 @@ public class ApiUserService {
     public UserDto deleteUser(final Long id) {
         log.info("ApiUserService.deleteUser");
         final User user = userService.findById(id);
-        return UserDto.target(
+        return UserDtoUtil.target(
                 userService.delete(user)
                 , Arrays.asList("userId", "userName"));
     }
@@ -85,4 +91,5 @@ public class ApiUserService {
                 .map(this::deleteUser)
                 .collect(Collectors.toList());
     }
+
 }
