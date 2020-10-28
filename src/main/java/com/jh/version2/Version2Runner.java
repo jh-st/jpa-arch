@@ -1,5 +1,6 @@
 package com.jh.version2;
 
+import com.jh.version2.common.dto.variable.Level;
 import com.jh.version2.common.dto.variable.Role;
 import com.jh.version2.domain.team.dto.TeamDto;
 import com.jh.version2.domain.team.dto.TeamSaveDto;
@@ -36,15 +37,15 @@ public class Version2Runner implements ApplicationRunner {
 
         for (int i=0; i<1000; i++) {
             if (i >= 800)
-                userService.postUser(new UserSaveDto("test"+i, i, Role.ROLE_USER, teamE.getTeamId()));
+                userService.postUser(new UserSaveDto("test"+i, i, Role.ROLE_USER, Level.HIGH, teamE.getTeamId()));
             else if (i >= 600)
-                userService.postUser(new UserSaveDto("test"+i, i, Role.ROLE_USER, teamD.getTeamId()));
+                userService.postUser(new UserSaveDto("test"+i, i, Role.ROLE_USER, Level.MEDIUM, teamD.getTeamId()));
             else if (i >= 400)
-                userService.postUser(new UserSaveDto("test"+i, i, Role.ROLE_USER, teamC.getTeamId()));
+                userService.postUser(new UserSaveDto("test"+i, i, Role.ROLE_USER, Level.LOW, teamC.getTeamId()));
             else if (i >= 200)
-                userService.postUser(new UserSaveDto("test"+i, i, Role.ROLE_USER, teamB.getTeamId()));
+                userService.postUser(new UserSaveDto("test"+i, i, Role.ROLE_USER, Level.HIGH, teamB.getTeamId()));
             else
-                userService.postUser(new UserSaveDto("test"+i, i, Role.ROLE_ADMIN, teamA.getTeamId()));
+                userService.postUser(new UserSaveDto("test"+i, i, Role.ROLE_ADMIN, Level.LOW, teamA.getTeamId()));
         }
 
         System.out.println("======================================================");

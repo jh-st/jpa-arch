@@ -1,6 +1,7 @@
 package com.jh.version2.domain.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jh.version2.common.dto.variable.Level;
 import com.jh.version2.common.dto.variable.Role;
 import com.jh.version2.common.entity.Base;
 import com.jh.version2.domain.team.entity.Team;
@@ -32,15 +33,25 @@ public class User extends Base implements Serializable {
     @Column(name = "ROLE")
     private Role role;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "LEVEL")
+    private Level level;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Team team;
 
     @Builder
-    public User(String name, Integer age, Role role, Team team) {
+    public User(
+            String name
+            , Integer age
+            , Role role
+            , Level level
+            , Team team) {
         this.name = name;
         this.age = age;
         this.role = role;
+        this.level = level;
         this.team = team;
     }
 
