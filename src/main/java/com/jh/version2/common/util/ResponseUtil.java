@@ -1,15 +1,13 @@
-package com.jh.version2.function.service;
+package com.jh.version2.common.util;
 
 import com.jh.version2.common.response.CommonResult;
 import com.jh.version2.common.response.SingleResult;
-import lombok.RequiredArgsConstructor;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 @Slf4j
-@Service
-@RequiredArgsConstructor
-public class ResponseService {
+@UtilityClass
+public class ResponseUtil {
 
     public <T> SingleResult<T> getResult(final T data) {
         log.info("ResponseService.getResult");

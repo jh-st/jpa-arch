@@ -1,13 +1,10 @@
 package com.jh.version2.domain.user.dto;
 
 import com.jh.version2.domain.team.entity.Team;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserTeamDto {
 
     private Long teamId;

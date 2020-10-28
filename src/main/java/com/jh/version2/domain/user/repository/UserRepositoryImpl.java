@@ -31,14 +31,16 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
         final QUser qUser = QUser.user;
         final QTeam qTeam = QTeam.team;
         final JPAQuery<UserDto> query = jpaQueryFactory
-                .select(Projections.bean(
+                .select(Projections.constructor(
                         UserDto.class
-                        , qUser.id.as("userId")
+                        , qUser
+                        /*, qUser.id.as("userId")
                         , qUser.name.as("userName")
                         , qUser.age.as("userAge")
+                        , qUser.role.as("userRole")
                         , qTeam.id.as("teamId")
                         , qTeam.name.as("teamName")
-                        , qTeam.score.as("teamScore")
+                        , qTeam.score.as("teamScore")*/
                 ))
                 .from(qUser)
                 .innerJoin(qUser.team, qTeam)

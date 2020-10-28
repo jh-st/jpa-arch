@@ -1,10 +1,11 @@
 package com.jh.version2;
 
+import com.jh.version2.common.dto.variable.Role;
 import com.jh.version2.domain.team.dto.TeamDto;
 import com.jh.version2.domain.team.dto.TeamSaveDto;
 import com.jh.version2.domain.team.service.TeamService;
 import com.jh.version2.domain.user.dto.UserSaveDto;
-import com.jh.version2.domain.user.service.UserService;
+import com.jh.version2.function.service.ApiUserService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -19,10 +20,10 @@ public class Version2Runner implements ApplicationRunner {
     TeamService teamService;
 
     @Autowired
-    UserService userService;
+    ApiUserService userService;
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         final TeamDto teamA = teamService.save(new TeamSaveDto("A-TEAM", 1500));
         final TeamDto teamB = teamService.save(new TeamSaveDto("B-TEAM", 200));
         final TeamDto teamC = teamService.save(new TeamSaveDto("C-TEAM", 500));
@@ -31,19 +32,19 @@ public class Version2Runner implements ApplicationRunner {
 
         for (int i=0; i<1000; i++) {
             if (i >= 800)
-                userService.save(new UserSaveDto("test"+i, i, teamE.getTeamId()));
+                userService.postUser(new UserSaveDto("test"+i, i, Role.ROLE_USER, teamE.getTeamId()));
             else if (i >= 600)
-                userService.save(new UserSaveDto("test"+i, i, teamD.getTeamId()));
+                userService.postUser(new UserSaveDto("test"+i, i, Role.ROLE_USER, teamD.getTeamId()));
             else if (i >= 400)
-                userService.save(new UserSaveDto("test"+i, i, teamC.getTeamId()));
+                userService.postUser(new UserSaveDto("test"+i, i, Role.ROLE_USER, teamC.getTeamId()));
             else if (i >= 200)
-                userService.save(new UserSaveDto("test"+i, i, teamB.getTeamId()));
+                userService.postUser(new UserSaveDto("test"+i, i, Role.ROLE_USER, teamB.getTeamId()));
             else
-                userService.save(new UserSaveDto("test"+i, i, teamA.getTeamId()));
+                userService.postUser(new UserSaveDto("test"+i, i, Role.ROLE_ADMIN, teamA.getTeamId()));
         }
 
         System.out.println("======================================================");
-        System.out.println("User Count : " + userService.findAll().size());
+        System.out.println("User Count : " + userService.getUsers().size());
         System.out.println("======================================================");
     }
 }

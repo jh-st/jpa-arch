@@ -5,7 +5,6 @@ import com.jh.version2.domain.team.repository.TeamRepository;
 import com.jh.version2.domain.user.dto.UserApplyDto;
 import com.jh.version2.domain.user.dto.UserConditionDto;
 import com.jh.version2.domain.user.dto.UserDto;
-import com.jh.version2.domain.user.dto.UserSaveDto;
 import com.jh.version2.domain.user.entity.User;
 import com.jh.version2.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,27 +41,30 @@ public class UserService {
         return userRepository.findAll().stream().map(UserDto::new).collect(Collectors.toList());
     }
 
+    public List<UserDto> findUsersByConfigure(List<String> args) {
+        log.info("UserService.findUsersByConfigure");
+        return this.findUsers().stream().map(o -> UserDto.target(o, args)).collect(Collectors.toList());
+    }
+
     public Page<UserDto> findPages(final UserConditionDto conditionDto) {
         log.info("UserService.findPages");
         return userRepository.findPages(conditionDto);
     }
 
+    public Page<UserDto> findPagesByConfigure(final UserConditionDto conditionDto, final List<String> args) {
+        log.info("UserService.findPagesByConfigure");
+        return this.findPages(conditionDto).map(o -> UserDto.target(o, args));
+    }
+
     public UserDto findByUserId(final Long userId) {
         log.info("UserService.findByUserId");
-        System.out.println("2======================================================");
         return userRepository.findById(userId).map(UserDto::new).orElseThrow(RuntimeException::new);
     }
 
     @Transactional
-    public UserDto save(final UserSaveDto saveDto) {
+    public UserDto save(final User user) {
         log.info("UserService.save");
-        final Team team = teamRepository.findById(saveDto.getTeamId()).orElseThrow(RuntimeException::new);
-        final User user = userRepository.save(
-                User.builder()
-                        .name(saveDto.getUserName())
-                        .age(saveDto.getUserAge())
-                        .team(team)
-                        .build());
+        userRepository.save(user);
         return UserDto.of(user);
     }
 
@@ -72,6 +74,7 @@ public class UserService {
         final User user = this.findById(userId);
         final Team team = teamRepository.findById(applyDto.getTeamId()).orElseThrow(RuntimeException::new);
         user.update(applyDto.getUserAge(), team);
+        //user.update(applyDto.getUserAge(), team);
         return UserDto.of(user);
     }
 

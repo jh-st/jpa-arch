@@ -1,12 +1,12 @@
 package com.jh.version2.function.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jh.version2.common.util.ResponseUtil;
 import com.jh.version2.domain.team.entity.Team;
 import com.jh.version2.domain.team.service.TeamService;
 import com.jh.version2.domain.user.dto.UserDto;
 import com.jh.version2.domain.user.entity.User;
 import com.jh.version2.domain.user.service.UserService;
-import com.jh.version2.function.service.ResponseService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -51,7 +51,7 @@ class UserControllerTest {
     EntityManager em;
 
     @Autowired
-    ResponseService responseService;
+    ResponseUtil responseUtil;
 
     @Autowired
     UserService userService;
@@ -75,8 +75,8 @@ class UserControllerTest {
                 .build();
 
         final UserDto userDto = UserDto.of(user);
-        userDto.setUserId(1L);
-        userDto.getTeam().setTeamId(1L);
+        //userDto.setUserId(1L);
+        //userDto.getTeam().setTeamId(1L);
 
         // when
         final ResultActions result = this.mockMvc.perform(
