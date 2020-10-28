@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jh.version2.common.dto.variable.Role;
 import com.jh.version2.common.entity.Base;
 import com.jh.version2.domain.team.entity.Team;
+import com.jh.version2.domain.user.dto.UserApplyDto;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -43,13 +44,15 @@ public class User extends Base implements Serializable {
         this.team = team;
     }
 
-    public void update(Integer age, Team team) {
-        this.age = age;
+    public User update(UserApplyDto applyDto, Team team) {
+        this.age = applyDto.getUserAge();
         this.team = team;
+        return this;
     }
 
-    public void updateRole(Role role) {
+    public User updateRole(Role role) {
         this.role = role;
+        return this;
     }
 
 }

@@ -1,9 +1,12 @@
 package com.jh.version2.domain.user.dto;
 
 import com.jh.version2.domain.team.entity.Team;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Getter @Setter
+@Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserTeamDto {
 
@@ -24,9 +27,4 @@ public class UserTeamDto {
                 .build();
     }
 
-    public UserTeamDto(final Long teamId, final String teamName, final Integer teamScore) {
-        this.teamId = teamId;
-        this.teamName = teamName;
-        this.teamScore = teamScore;
-    }
 }

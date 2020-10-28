@@ -26,6 +26,16 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
+    private Page<UserDto> getPage(
+            final JPAQuery<UserDto> query
+            , final UserConditionDto conditionDto
+    ) {
+        final List<UserDto> list = Objects.requireNonNull(getQuerydsl())
+                .applyPagination(conditionDto.getPageRequest(), query)
+                .fetch();
+        return new PageImpl<>(list, conditionDto.getPageRequest(), query.fetchCount());
+    }
+
     @Override
     public Page<UserDto> findPages(final UserConditionDto conditionDto) {
         final QUser qUser = QUser.user;
@@ -34,23 +44,15 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
                 .select(Projections.constructor(
                         UserDto.class
                         , qUser
-                        /*, qUser.id.as("userId")
-                        , qUser.name.as("userName")
-                        , qUser.age.as("userAge")
-                        , qUser.role.as("userRole")
-                        , qTeam.id.as("teamId")
-                        , qTeam.name.as("teamName")
-                        , qTeam.score.as("teamScore")*/
                 ))
                 .from(qUser)
                 .innerJoin(qUser.team, qTeam)
                 .where(
-                        UserPredicateHelper.compareKeyword(conditionDto)
+                        UserPredicateHelper.basicCondition()
+                        , UserPredicateHelper.compareKeyword(conditionDto)
                 );
 
-        final List<UserDto> users = Objects.requireNonNull(getQuerydsl())
-                .applyPagination(conditionDto.getPageRequest(), query)
-                .fetch();
-        return new PageImpl<>(users, conditionDto.getPageRequest(), query.fetchCount());
+        return getPage(query, conditionDto);
     }
+
 }

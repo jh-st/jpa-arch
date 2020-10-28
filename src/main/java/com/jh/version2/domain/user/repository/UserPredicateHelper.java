@@ -8,8 +8,20 @@ import com.querydsl.core.types.Predicate;
 import lombok.experimental.UtilityClass;
 import org.springframework.util.ObjectUtils;
 
+import static com.jh.version2.common.dto.variable.YesOrNo.N;
+import static com.jh.version2.common.dto.variable.YesOrNo.Y;
+
 @UtilityClass
 public class UserPredicateHelper {
+
+    public Predicate basicCondition() {
+        final BooleanBuilder builder = new BooleanBuilder();
+
+        builder.and(QUser.user.useYn.eq(Y))
+                .and(QUser.user.deleteYn.eq(N));
+
+        return builder;
+    }
 
     public Predicate compareKeyword(final UserConditionDto conditionDto) {
         final BooleanBuilder builder = new BooleanBuilder();
@@ -30,5 +42,6 @@ public class UserPredicateHelper {
 
         return builder;
     }
+
 
 }

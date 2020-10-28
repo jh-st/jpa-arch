@@ -1,29 +1,29 @@
 package com.jh.version2.function.service;
 
 import com.jh.version2.domain.team.entity.Team;
-import com.jh.version2.domain.team.repository.TeamRepository;
+import com.jh.version2.domain.team.service.TeamService;
+import com.jh.version2.domain.user.dto.UserApplyDto;
 import com.jh.version2.domain.user.dto.UserConditionDto;
 import com.jh.version2.domain.user.dto.UserDto;
 import com.jh.version2.domain.user.dto.UserSaveDto;
+import com.jh.version2.domain.user.entity.User;
 import com.jh.version2.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ApiUserService {
 
     private final UserService userService;
-
-    private final TeamRepository teamRepository;
+    private final TeamService teamService;
 
     public Page<UserDto> getPages(final UserConditionDto conditionDto) {
         log.info("ApiUserService.getPages");
@@ -34,7 +34,8 @@ public class ApiUserService {
             final UserConditionDto conditionDto, final List<String> args
     ) {
         log.info("ApiUserService.getPagesByConfigure");
-        return userService.findPages(conditionDto).map(o -> UserDto.target(o, args));
+        return userService.findPages(conditionDto)
+                .map(o -> UserDto.target(o, args));
     }
 
     public List<UserDto> getUsers() {
@@ -44,7 +45,10 @@ public class ApiUserService {
 
     public List<UserDto> getUsersByConfigure(final List<String> args) {
         log.info("ApiUserService.getUsersByConfigure");
-        return userService.findUsers().stream().map(o -> UserDto.target(o, args)).collect(Collectors.toList());
+        return userService.findUsers()
+                .stream()
+                .map(o -> UserDto.target(o, args))
+                .collect(Collectors.toList());
     }
 
     public UserDto getUser(final Long id) {
@@ -52,22 +56,33 @@ public class ApiUserService {
         return userService.findByUserId(id);
     }
 
-    @Transactional
     public UserDto postUser(final UserSaveDto saveDto) {
         log.info("UserService.save");
-        final Team team = teamRepository.findById(saveDto.getTeamId()).orElseThrow(RuntimeException::new);
+        final Team team = teamService.findById(saveDto.getTeamId());
         saveDto.setTeam(team);
         return userService.save(saveDto.toEntity());
     }
 
-    /*@Transactional
-    public UserDto apply(final Long userId, final UserApplyDto applyDto) {
+    public UserDto putUser(final Long id, final UserApplyDto applyDto) {
         log.info("UserService.apply");
-        final User user = this.findById(userId);
-        final Team team = teamRepository.findById(applyDto.getTeamId()).orElseThrow(RuntimeException::new);
-        user.update(applyDto.getUserAge(), team);
-        //user.update(applyDto.getUserAge(), team);
-        return UserDto.of(user);
-    }*/
+        final Team team = teamService.findById(applyDto.getTeamId());
+        final User user = userService.findById(id);
+        return userService.apply(user, applyDto, team);
+    }
 
+    public UserDto deleteUser(final Long id) {
+        log.info("ApiUserService.deleteUser");
+        final User user = userService.findById(id);
+        return UserDto.target(
+                userService.delete(user)
+                , Arrays.asList("userId", "userName"));
+    }
+
+    public List<UserDto> deleteUsers(List<Long> ids) {
+        log.info("ApiUserService.deleteUsers");
+        return ids
+                .stream()
+                .map(this::deleteUser)
+                .collect(Collectors.toList());
+    }
 }

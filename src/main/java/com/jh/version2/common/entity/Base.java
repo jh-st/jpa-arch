@@ -101,8 +101,9 @@ public class Base {
      * @implNote 사용 중지
      * @since 2020. 10. 28. 오전 11:51:44
      */
-    public void updateBan() {
+    public Object updateBan() {
         this.useYn = YesOrNo.N;
+        return this;
     }
 
     /**
@@ -112,7 +113,8 @@ public class Base {
      * @implNote 삭제
      * @since 2020. 10. 28. 오전 11:51:45
      */
-    public void delete() {
+    public Object delete() {
         this.deleteYn = YesOrNo.Y;
+        return this;
     }
 }
