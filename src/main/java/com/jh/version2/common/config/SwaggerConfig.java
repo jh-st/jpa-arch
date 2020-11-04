@@ -13,6 +13,13 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
+/**
+ * The type Swagger config.
+ *
+ * @author [오지훈]
+ * @implNote Swagger2 Configure 작성
+ * @since 2020. 10. 29. 오전 11:25:15
+ */
 @Configuration
 @EnableSwagger2
 @RequiredArgsConstructor

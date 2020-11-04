@@ -4,7 +4,6 @@ import com.jh.version2.domain.team.dto.TeamConditionDto;
 import com.jh.version2.domain.team.dto.TeamDto;
 import com.jh.version2.domain.team.entity.QTeam;
 import com.jh.version2.domain.team.entity.Team;
-import com.jh.version2.domain.user.entity.QUser;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -38,7 +37,6 @@ public class TeamRepositoryImpl extends QuerydslRepositorySupport implements Tea
 
     @Override
     public Page<TeamDto> findPages(final TeamConditionDto conditionDto) {
-        final QUser qUser = QUser.user;
         final QTeam qTeam = QTeam.team;
         final JPAQuery<TeamDto> query = jpaQueryFactory
                 .select(Projections.constructor(
@@ -54,4 +52,25 @@ public class TeamRepositoryImpl extends QuerydslRepositorySupport implements Tea
         return getPage(query, conditionDto);
     }
 
+    /*@Override
+    public Page<TeamDto> findPages(TeamConditionDto conditionDto) {
+        final QTeam qTeam = QTeam.team;
+
+        final JPAQuery<TeamDto> query = jpaQueryFactory
+                .select(Projections.constructor(
+                        TeamDto.class
+                        , qTeam
+                ))
+                .from(qTeam)
+                .where(
+                        TeamPredicateHelper.basicCondition()
+                        , TeamPredicateHelper.compareKeyword(conditionDto)
+                )
+                .offset(conditionDto.getPage())
+                .limit(conditionDto.getSize())
+                .orderBy(qTeam.id.desc())
+                ;
+
+        return new PageImpl<>(query.fetch(), conditionDto.getPageRequest(), query.fetchCount());
+    }*/
 }
