@@ -11,7 +11,6 @@ public class ResponseUtil {
 
     public <T> SingleResult<T> getResult(final T data) {
         log.info("ResponseService.getResult");
-        System.out.println("1======================================================");
         final SingleResult<T> result = new SingleResult<>();
         result.setData(data);
         return result;

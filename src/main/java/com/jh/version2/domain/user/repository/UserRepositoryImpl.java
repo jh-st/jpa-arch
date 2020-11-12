@@ -13,17 +13,21 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Objects;
 
 @Repository
 public class UserRepositoryImpl extends QuerydslRepositorySupport implements UserRepositoryCustom {
 
+    private final EntityManager entityManager;
+
     private final JPAQueryFactory jpaQueryFactory;
 
-    public UserRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
+    public UserRepositoryImpl(EntityManager entityManager, JPAQueryFactory jpaQueryFactory) {
         super(User.class);
-        this.jpaQueryFactory = jpaQueryFactory;
+        this.entityManager = entityManager;
+        this.jpaQueryFactory = new JPAQueryFactory(entityManager);
     }
 
     private Page<UserDto> getPage(
