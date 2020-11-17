@@ -20,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DynamicUpdate
 @DynamicInsert
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
 public class Team extends Base implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,12 +37,15 @@ public class Team extends Base implements Serializable {
     @Column(name = "SCORE")
     private Integer score;
 
-    @OneToMany
-    @JoinColumn(name = "UPPER_ID",
-            referencedColumnName = "ID",
-            insertable = false, updatable = false)
-    private List<Team> teams;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "UPPER_ID", referencedColumnName = "ID", updatable = false, insertable = false)
+    private Team parent;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
+    private List<Team> children;
+
+    //@JsonIgnore
+    //@JsonManagedReference
     @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
     private List<User> users;
 

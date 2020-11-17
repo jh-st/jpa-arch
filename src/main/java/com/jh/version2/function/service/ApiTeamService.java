@@ -68,7 +68,7 @@ public class ApiTeamService {
         log.info("ApiTeamService.deleteUser");
         final Team team = teamService.findById(id);
 
-        if (!team.getTeams().isEmpty()) {
+        if (!team.getChildren().isEmpty()) {
             throw new RuntimeException();
         }
 

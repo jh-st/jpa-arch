@@ -29,7 +29,7 @@ public class TeamDto {
         this.teamName = team.getName();
         this.teamScore = team.getScore();
         this.users = TeamUserDtoUtil.convert(team.getUsers());
-        this.teams = TeamDtoUtil.convert(team.getTeams());
+        this.teams = TeamDtoUtil.convert(team.getChildren());
     }
 
 }
