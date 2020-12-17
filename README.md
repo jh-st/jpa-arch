@@ -1,2 +1,2 @@
-# SpringRestDocsJunit5Test
-Spring Rest Docs 문서 만들기
+# SpringBoot + JPA + Simple Code
+Spring Boot Project Simple FrameWork
