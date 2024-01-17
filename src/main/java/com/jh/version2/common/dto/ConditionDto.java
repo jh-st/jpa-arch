@@ -2,10 +2,12 @@ package com.jh.version2.common.dto;
 
 import com.jh.version2.common.dto.variable.Keyword;
 import com.jh.version2.common.dto.variable.Sorting;
+
 import io.swagger.annotations.ApiParam;
-import lombok.*;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * The type Condition dto.
@@ -15,7 +17,6 @@ import org.springframework.data.domain.Sort;
  * @since 2020. 10. 27. 오후 3:08:53
  */
 @Getter
-@Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class ConditionDto {
@@ -41,27 +42,4 @@ public class ConditionDto {
     @ApiParam(value = "Search End Date", defaultValue = "2020.12.31")
     protected String endDt;
 
-    /**
-     * Gets sort.
-     *
-     * @return the sort
-     * @author [오지훈]
-     * @implNote 정렬값 return
-     * @since 2020. 10. 27. 오후 3:08:15
-     */
-    public Sort getSort() {
-        return orderBy.getSort();
-    }
-
-    /**
-     * Gets page request.
-     *
-     * @return the page request
-     * @author [오지훈]
-     * @implNote Paging 처리를 위한 PageRequest return
-     * @since 2020. 10. 27. 오후 3:08:17
-     */
-    public PageRequest getPageRequest() {
-        return PageRequest.of(this.getPage(), this.getSize(), this.getSort());
-    }
 }

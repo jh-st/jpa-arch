@@ -21,7 +21,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @since 2020. 10. 29. 오전 11:25:15
  */
 @Configuration
-@EnableSwagger2
 @RequiredArgsConstructor
 public class SwaggerConfig implements WebMvcConfigurer {
 

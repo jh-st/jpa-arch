@@ -4,7 +4,6 @@ import com.jh.version2.domain.team.entity.Team;
 import lombok.*;
 
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TeamSaveDto {
 
@@ -21,6 +20,7 @@ public class TeamSaveDto {
         this.teamScore = teamScore;
     }
 
+    // test용 > 데이터등록용
     public TeamSaveDto (
             final String teamName
             , final Integer teamScore

@@ -11,6 +11,8 @@ import com.jh.version2.function.service.ApiUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -30,6 +32,10 @@ public class UserController {
     private final ApiUserService userService;
 
     @ApiOperation(value = "유저 다건 조회 paging v1.0")
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "성공입니다.")
+        , @ApiResponse(code = 400, message = "접근이 올바르지 않습니다.")
+    })
     @GetMapping(value = "pages", name = "유저 다건 조회 paging v1.0"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Page<UserDto>> getPages(final UserConditionDto conditionDto) {

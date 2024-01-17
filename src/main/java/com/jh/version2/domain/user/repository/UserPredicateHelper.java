@@ -1,15 +1,16 @@
 package com.jh.version2.domain.user.repository;
 
+import static com.jh.version2.common.dto.variable.YesOrNo.*;
+
+import org.springframework.util.ObjectUtils;
+
 import com.jh.version2.common.dto.variable.Keyword;
 import com.jh.version2.domain.user.dto.UserConditionDto;
 import com.jh.version2.domain.user.entity.QUser;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import lombok.experimental.UtilityClass;
-import org.springframework.util.ObjectUtils;
 
-import static com.jh.version2.common.dto.variable.YesOrNo.N;
-import static com.jh.version2.common.dto.variable.YesOrNo.Y;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class UserPredicateHelper {

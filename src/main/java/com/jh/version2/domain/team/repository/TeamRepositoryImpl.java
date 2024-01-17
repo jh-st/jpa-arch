@@ -27,12 +27,12 @@ public class TeamRepositoryImpl extends QuerydslRepositorySupport implements Tea
 
     private Page<TeamDto> getPage(
             final JPAQuery<TeamDto> query
-            , final TeamConditionDto conditionDto
-            ) {
-        final List<TeamDto> list = Objects.requireNonNull(getQuerydsl())
-                .applyPagination(conditionDto.getPageRequest(), query)
-                .fetch();
-        return new PageImpl<>(list, conditionDto.getPageRequest(), query.fetchCount());
+            , final TeamConditionDto conditionDto) {
+        // final List<TeamDto> list = Objects.requireNonNull(getQuerydsl())
+        //         .applyPagination(conditionDto.getPageRequest(), query)
+        //         .fetch();
+        // return new PageImpl<>(list, conditionDto.getPageRequest(), query.fetchCount());
+        return null;
     }
 
     @Override

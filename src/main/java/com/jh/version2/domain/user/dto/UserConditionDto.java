@@ -1,6 +1,8 @@
 package com.jh.version2.domain.user.dto;
 
 import com.jh.version2.common.dto.ConditionDto;
+
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
 import lombok.*;
 
@@ -18,9 +20,11 @@ import lombok.*;
 public class UserConditionDto extends ConditionDto {
 
     @ApiParam(value = "User's age")
+    @ApiModelProperty(example = "30")
     private Integer userAge;
 
     @ApiParam(value = "The ID of the team")
+    @ApiModelProperty(example = "1")
     private Long teamId;
 
 }

@@ -12,7 +12,6 @@ import lombok.*;
  * @since 2020. 10. 27. 오후 3:09:38
  */
 @Getter
-@Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TeamConditionDto extends ConditionDto {

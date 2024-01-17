@@ -1,21 +1,25 @@
 package com.jh.version2;
 
-import com.jh.version2.domain.book.Book;
-import com.jh.version2.domain.store.Store;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
+import com.jh.version2.common.dto.variable.Level;
+import com.jh.version2.common.dto.variable.Role;
+import com.jh.version2.domain.team.dto.TeamDto;
+import com.jh.version2.domain.team.dto.TeamSaveDto;
+import com.jh.version2.domain.user.dto.UserSaveDto;
+import com.jh.version2.function.service.ApiTeamService;
+import com.jh.version2.function.service.ApiUserService;
+
+import lombok.NoArgsConstructor;
 
 @Component
 @NoArgsConstructor
 public class Version2Runner implements ApplicationRunner {
 
-    /*@Autowired
+    @Autowired
     ApiTeamService teamService;
 
     @Autowired
@@ -51,10 +55,9 @@ public class Version2Runner implements ApplicationRunner {
         System.out.println("User Count : " + userService.getUsers().size());
         System.out.println("======================================================");
 
+    }
 
-    }*/
-
-    @Autowired
+    /*@Autowired
     EntityManager entityManager;
 
     @Transactional
@@ -100,7 +103,7 @@ public class Version2Runner implements ApplicationRunner {
 
         entityManager.flush();
         entityManager.clear();
-    }
+    }*/
 
     /*@Autowired
     EntityManager entityManager;

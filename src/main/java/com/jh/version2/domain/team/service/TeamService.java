@@ -44,7 +44,7 @@ public class TeamService {
         log.info("TeamService.findTeams");
         return teamRepository.findAll()
                 .stream()
-                .map(TeamDto::new)
+                .map(TeamDtoUtil::of)
                 .collect(Collectors.toList());
     }
 
@@ -56,7 +56,7 @@ public class TeamService {
     public TeamDto findByTeamId(final Long id) {
         log.info("TeamService.findByTeamId");
         return teamRepository.findById(id)
-                .map(TeamDto::new)
+                .map(TeamDtoUtil::of)
                 .orElseThrow(RuntimeException::new);
     }
 

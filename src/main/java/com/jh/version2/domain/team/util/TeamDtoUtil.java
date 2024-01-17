@@ -3,6 +3,7 @@ package com.jh.version2.domain.team.util;
 import com.jh.version2.common.dto.variable.YesOrNo;
 import com.jh.version2.domain.team.dto.TeamDto;
 import com.jh.version2.domain.team.entity.Team;
+
 import lombok.experimental.UtilityClass;
 import org.springframework.util.ObjectUtils;
 
@@ -13,13 +14,29 @@ import java.util.stream.Collectors;
 @UtilityClass
 public class TeamDtoUtil {
 
-    public List<TeamDto> convert(final List<Team> teams) {
+    public List<TeamDto> getChildren(final List<Team> teams) {
         return ObjectUtils.isEmpty(teams) ? null :
-                teams
-                .stream()
-                .filter(TeamDtoUtil::condition)
-                .map(TeamDto::new)
-                .collect(Collectors.toList());
+                teams.stream()
+                    .filter(TeamDtoUtil::condition)
+                    .map(team ->
+                        TeamDto.builder()
+                            .teamId(team.getId())
+                            .teamName(team.getName())
+                            .teamScore(team.getScore())
+                            .users(TeamUserDtoUtil.convert(team.getUsers()))
+                            .children(getChildren(team.getChildren()))
+                            .build()
+                    )
+                    .collect(Collectors.toList());
+    }
+
+    public TeamDto getParent(final Team team) {
+        return team != null && team.getId() != null ?
+            TeamDto.builder()
+                .teamId(team.getId())
+                .teamName(team.getName())
+                .teamScore(team.getScore())
+                .build() : null;
     }
 
     public Boolean condition(Team team) {
@@ -29,8 +46,13 @@ public class TeamDtoUtil {
 
     public TeamDto of (final Team team) {
         return TeamDto.builder()
-                .team(team)
-                .build();
+            .teamId(team.getId())
+            .teamName(team.getName())
+            .teamScore(team.getScore())
+            .users(TeamUserDtoUtil.convert(team.getUsers()))
+            .children(getChildren(team.getChildren()))
+            .parent(getParent(team.getParent()))
+            .build();
     }
 
     public TeamDto target(TeamDto teamDto, List<String> args) {
