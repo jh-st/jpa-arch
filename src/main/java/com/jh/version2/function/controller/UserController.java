@@ -1,5 +1,20 @@
 package com.jh.version2.function.controller;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.jh.version2.common.response.SingleResult;
 import com.jh.version2.common.util.ResponseUtil;
 import com.jh.version2.common.validate.ValidationGroups;
@@ -8,6 +23,7 @@ import com.jh.version2.domain.user.dto.UserConditionDto;
 import com.jh.version2.domain.user.dto.UserDto;
 import com.jh.version2.domain.user.dto.UserSaveDto;
 import com.jh.version2.function.service.ApiUserService;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -15,12 +31,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.http.MediaType;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @Api(tags = "User", description = "유저")
@@ -35,6 +45,7 @@ public class UserController {
     @ApiResponses({
         @ApiResponse(code = 200, message = "성공입니다.")
         , @ApiResponse(code = 400, message = "접근이 올바르지 않습니다.")
+        , @ApiResponse(code = 403, message = "접근권한이 없습니다.")
     })
     @GetMapping(value = "pages", name = "유저 다건 조회 paging v1.0"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
