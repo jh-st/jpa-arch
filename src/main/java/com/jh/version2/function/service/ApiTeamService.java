@@ -1,5 +1,12 @@
 package com.jh.version2.function.service;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
+
 import com.jh.version2.domain.team.dto.TeamApplyDto;
 import com.jh.version2.domain.team.dto.TeamConditionDto;
 import com.jh.version2.domain.team.dto.TeamDto;
@@ -7,14 +14,9 @@ import com.jh.version2.domain.team.dto.TeamSaveDto;
 import com.jh.version2.domain.team.entity.Team;
 import com.jh.version2.domain.team.service.TeamService;
 import com.jh.version2.domain.team.util.TeamDtoUtil;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -68,11 +70,11 @@ public class ApiTeamService {
         log.info("ApiTeamService.deleteUser");
         final Team team = teamService.findById(id);
 
-        if (!team.getChildren().isEmpty()) {
+        if (!team.getChildren().isEmpty()) { // TODO : 도메인 레벨로 로직 이동 해야함
             throw new RuntimeException();
         }
 
-        if (!team.getUsers().isEmpty()) {
+        if (!team.getUsers().isEmpty()) { // TODO : 도메인 레벨로 로직 이동 해야함
             throw new RuntimeException();
         }
 

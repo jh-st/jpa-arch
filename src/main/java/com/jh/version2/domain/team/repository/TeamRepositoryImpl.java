@@ -1,5 +1,15 @@
 package com.jh.version2.domain.team.repository;
 
+import java.util.List;
+import java.util.Objects;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import org.springframework.stereotype.Repository;
+
+import com.jh.version2.common.util.ConditionUtil;
 import com.jh.version2.domain.team.dto.TeamConditionDto;
 import com.jh.version2.domain.team.dto.TeamDto;
 import com.jh.version2.domain.team.entity.QTeam;
@@ -7,13 +17,6 @@ import com.jh.version2.domain.team.entity.Team;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Objects;
 
 @Repository
 public class TeamRepositoryImpl extends QuerydslRepositorySupport implements TeamRepositoryCustom {
@@ -28,11 +31,13 @@ public class TeamRepositoryImpl extends QuerydslRepositorySupport implements Tea
     private Page<TeamDto> getPage(
             final JPAQuery<TeamDto> query
             , final TeamConditionDto conditionDto) {
-        // final List<TeamDto> list = Objects.requireNonNull(getQuerydsl())
-        //         .applyPagination(conditionDto.getPageRequest(), query)
-        //         .fetch();
-        // return new PageImpl<>(list, conditionDto.getPageRequest(), query.fetchCount());
-        return null;
+        PageRequest pageRequest = ConditionUtil.getPageRequest(conditionDto.getPage(), conditionDto.getSize(),
+            conditionDto.getOrderBy().getSort());
+
+        final List<TeamDto> list = Objects.requireNonNull(getQuerydsl())
+                .applyPagination(pageRequest, query)
+                .fetch();
+        return new PageImpl<>(list, pageRequest, query.fetchCount());
     }
 
     @Override
